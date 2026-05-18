@@ -969,6 +969,14 @@
     <!-- Link de assinatura -->
     <div id="detSolLinkAssinatura" style="margin-bottom:16px;"></div>
 
+    <div id="detSolBtnEditar" style="display:none; margin-bottom:8px;">
+  <button onclick="abrirEdicaoSolicitacaoCliente()"
+    style="width:100%; background:rgba(0,184,230,0.1); border:1px solid rgba(0,184,230,0.3);
+    border-radius:12px; padding:13px; color:#00B8E6; font-size:14px; font-weight:700; cursor:pointer;">
+    ✏️ Editar Itens da Solicitação
+  </button>
+</div>
+
     <div id="detSolBtnCancelar" style="display:none;">
       <button onclick="cancelarSolicitacaoAtual()"
         style="width:100%; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); border-radius:12px; padding:13px; color:var(--vermelho); font-size:14px; font-weight:700; cursor:pointer; transition:background 0.2s;"
@@ -1538,8 +1546,14 @@ function preencherModalDetSol(s) {
     </div>`).join('');
 
   // Botão cancelar
-  const podeCancelar = ['PENDENTE','VISUALIZADO'].includes(s.status);
+  const podeCancelar = ['PENDENTE', 'VISUALIZADO'].includes(s.status);
   document.getElementById('detSolBtnCancelar').style.display = podeCancelar ? 'block' : 'none';
+
+  // Botão editar — só quando PENDENTE
+  const btnEditarWrap = document.getElementById('detSolBtnEditar');
+  if (btnEditarWrap) {
+    btnEditarWrap.style.display = s.status === 'PENDENTE' ? 'block' : 'none';
+  }
 
   // ── Link de assinatura para status ATENDIDO/AGUARDANDO TRANSPORTE/EM TRANSITO ──
   const statusComLink = ['ATENDIDO', 'AGUARDANDO TRANSPORTE', 'EM TRANSITO'];
